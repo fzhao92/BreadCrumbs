@@ -17,7 +17,7 @@ struct Crumb {
     init(name: String) {
         self.name = name
     }
-
+    
 }
 
 struct Location {
@@ -35,4 +35,5 @@ struct Location {
         self.longitude = longitude
         self.placeInLine = placeInLine
     }
+    
 }
