@@ -15,6 +15,9 @@ class MapViewController: UIViewController {
     @IBOutlet weak var mapView: MKMapView!
     var places: [CLPlacemark] = []
     var locationManager: CLLocationManager!
+    var placeInLineCounter = 1
+    //var breadCrumb: Crumb = Crumb()
+    var locationList: [Location] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -60,11 +63,44 @@ class MapViewController: UIViewController {
                     annotation.title = "Unknown Place"
                     self.mapView.addAnnotation(annotation)
                     print("Problem with the data received from geocoder")
-                }                
+                }
+                self.saveLocationToList(annotation: annotation)
             })
         }
     }
+    
+    func saveLocationToList(annotation: MKAnnotation) {
+        var locationName = ""
+        if let name = annotation.title {
+            if let unwrappedName = name {
+                locationName = unwrappedName
+            }
+        }
+        let location = Location(name: locationName, latitude: annotation.coordinate.latitude, longitude: annotation.coordinate.longitude, placeInLine: placeInLineCounter)
+        placeInLineCounter += 1
+        locationList.append(location)
+    }
 
+    @IBAction func saveButtonTapped(_ sender: UIBarButtonItem) {
+        saveCrumb()
+    }
+    
+    func saveCrumb() {
+        var crumb: Crumb = Crumb(name: "default")
+        let saveAlert = UIAlertController(title: "New Bread Crumb", message: "Save your trail!", preferredStyle: .alert)
+        let saveAction = UIAlertAction(title: "Save", style: .default) { _ in
+            guard let textField = saveAlert.textFields?.first, let text = textField.text else { return }
+            crumb.name = text
+            crumb.locations = self.locationList
+        }
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
+        
+        saveAlert.addTextField()
+        saveAlert.addAction(saveAction)
+        saveAlert.addAction(cancelAction)
+        present(saveAlert, animated: true, completion: nil)
+
+    }
 }
 
 extension MapViewController: CLLocationManagerDelegate {

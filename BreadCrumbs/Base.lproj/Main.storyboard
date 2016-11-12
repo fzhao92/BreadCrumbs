@@ -84,7 +84,11 @@
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                 <items>
                                     <navigationItem title="Title" id="fVn-XC-yIV">
-                                        <barButtonItem key="rightBarButtonItem" title="SAVE" id="XA1-um-edf"/>
+                                        <barButtonItem key="rightBarButtonItem" title="SAVE" id="XA1-um-edf">
+                                            <connections>
+                                                <action selector="saveButtonTapped:" destination="wXu-EL-JH5" id="iwk-9f-5QP"/>
+                                            </connections>
+                                        </barButtonItem>
                                     </navigationItem>
                                 </items>
                             </navigationBar>
