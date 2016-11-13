@@ -17,16 +17,15 @@ class MapViewController: UIViewController {
     var places: [CLPlacemark] = []
     var locationManager: CLLocationManager!
     var placeInLineCounter = 1
-    //var breadCrumb: Crumb = Crumb()
     var locationList: [Location] = []
     var crumbKey: String = ""
+    let city = ""
     
     let locationsRef = FIRDatabase.database().reference(withPath: "locations")
     let crumbsRef = FIRDatabase.database().reference(withPath: "crumbs")
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
         placeInLineCounter = 1
         initGestures()
         setupLocationManager()
@@ -34,7 +33,6 @@ class MapViewController: UIViewController {
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
     func initGestures() {
@@ -57,12 +55,10 @@ class MapViewController: UIViewController {
                 
                 if (placemarks?.count)! > 0 {
                     let pm = (placemarks?[0])! 
-                    
                     // not all places have thoroughfare & subThoroughfare so validate those values
                     annotation.title = pm.thoroughfare! + ", " + pm.subThoroughfare!
                     annotation.subtitle = pm.subLocality
                     self.mapView.addAnnotation(annotation)
-                    print(pm)
                 }
                 else {
                     annotation.title = "Unknown Place"
@@ -90,9 +86,14 @@ class MapViewController: UIViewController {
         saveCrumb()
     }
     
+    @IBAction func clearPinButtonTapped(_ sender: UIBarButtonItem) {
+        clearPins()
+    }
+    
     func saveCrumb() {
         
         let saveAlert = UIAlertController(title: "New Bread Crumb", message: "Save your trail!", preferredStyle: .alert)
+        
         let saveAction = UIAlertAction(title: "Save", style: .default) { _ in
             guard let textField = saveAlert.textFields?.first, let text = textField.text else { return }
             let crumbKey = self.genKey()
@@ -106,9 +107,8 @@ class MapViewController: UIViewController {
                 let locationsRef = self.locationsRef.child(self.genKey())
                 locationsRef.setValue(self.locationList[index].toAnyObject())
             }
-            
-            //crumb.locations = self.locationList
         }
+        
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
         
         saveAlert.addTextField()
@@ -116,6 +116,11 @@ class MapViewController: UIViewController {
         saveAlert.addAction(cancelAction)
         present(saveAlert, animated: true, completion: nil)
 
+    }
+    
+    func clearPins() {
+        mapView.removeAnnotations(mapView.annotations)
+        locationList.removeAll()
     }
 }
 
@@ -146,9 +151,12 @@ extension MapViewController: CLLocationManagerDelegate {
 extension MapViewController: MKMapViewDelegate {
     
     func mapView(_ mapView: MKMapView, didDeselect view: MKAnnotationView) {
+        
     }
     
 }
+
+
 
 extension MapViewController {
     

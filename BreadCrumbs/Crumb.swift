@@ -14,14 +14,16 @@ struct Crumb {
     var key: String
     var crumbKey: String
     var name: String
+    var city: String
 //    var rating: Int?
     //var locations: [Location] = []
     let ref: FIRDatabaseReference?
     
-    init(name: String, key: String = "", crumbKey: String) {
+    init(name: String, key: String = "", crumbKey: String, city: String) {
         self.key = key
         self.name = name
         self.crumbKey = crumbKey
+        self.city = city
         self.ref = nil
     }
     
@@ -30,6 +32,7 @@ struct Crumb {
         let snapshotValue = snapshot.value as! [String: AnyObject]
         self.name = snapshotValue["name"] as! String
         self.crumbKey = snapshotValue["crumbKey"] as! String
+        self.city = snapshotValue["city"] as! String
 //        self.rating = snapshotValue["rating"] as? Int
         ref = snapshot.ref
     }
@@ -38,6 +41,7 @@ struct Crumb {
         return [
             "name": name,
             "crumbKey": crumbKey
+            "city": city
 //            "rating": rating!
         ]
     }
