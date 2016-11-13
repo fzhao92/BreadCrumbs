@@ -55,10 +55,7 @@ class MapViewController: UIViewController {
         calculateSegmentDirections(index: 0, time: 0, routes: [])
     }
     
-    func initGestures() {
-        let longPressMapGesture = UILongPressGestureRecognizer(target: self, action: #selector(self.addAnnotation(_ :)) )
-        mapView.addGestureRecognizer(longPressMapGesture)
-    }
+    // MARK: - Firebase related methods
     
     func saveLocationToList(annotation: MKAnnotation) {
         var locationName = ""
@@ -171,21 +168,16 @@ extension MapViewController: MKMapViewDelegate {
         mapView.removeAnnotations(mapView.annotations)
         locationList.removeAll()
         mapItemList.removeAll()
+        mapView.removeOverlays(mapView.overlays)
     }
     
     func calculateSegmentDirections(index: Int, time: TimeInterval, routes: [MKRoute]) {
-        // 1
         let request: MKDirectionsRequest = MKDirectionsRequest()
         request.source = mapItemList[index]
         request.destination = mapItemList[index+1]
-        // 2
         request.requestsAlternateRoutes = true
-        // 33
         request.transportType = .walking
-        // 4
         let directions = MKDirections(request: request)
-        
-        //get array of mkroutes
         
         directions.calculate { (response, error) in
             if let routeResponse = response?.routes {
@@ -198,14 +190,10 @@ extension MapViewController: MKMapViewDelegate {
                 timeVar += quickestRouteForSegment.expectedTravelTime
                 
                 if index+2 < self.mapItemList.count {
-                    //print("size of map list is \(self.mapItemList.count)")
-                    //print("Current map list index = \(index)")
                     self.calculateSegmentDirections(index: index+1, time: timeVar, routes: routesVar)
                 }
                 else {
                     self.activityIndicator.stopAnimating()
-                    //plot route on map
-                    print("Attempting to plot route var")
                     self.showRoute(routes: routesVar)
                 }
             }
@@ -229,15 +217,12 @@ extension MapViewController: MKMapViewDelegate {
     }
     
     func plotPolyline(route: MKRoute) {
-        // 1
         mapView.add(route.polyline)
-        // 2
         if mapView.overlays.count == 1 {
             mapView.setVisibleMapRect(route.polyline.boundingMapRect,
                                       edgePadding: UIEdgeInsetsMake(10.0, 10.0, 10.0, 10.0),
                                       animated: false)
         }
-            // 3
         else {
             let polylineBoundingRect =  MKMapRectUnion(mapView.visibleMapRect,
                                                        route.polyline.boundingMapRect)
@@ -274,6 +259,12 @@ extension MapViewController: MKMapViewDelegate {
 // MARK: - Helper Methods
 
 extension MapViewController {
+    
+    func initGestures() {
+        let longPressMapGesture = UILongPressGestureRecognizer(target: self, action: #selector(self.addAnnotation(_ :)) )
+        mapView.addGestureRecognizer(longPressMapGesture)
+    }
+
     
     func genKey() -> String {
         let length = 12
