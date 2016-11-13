@@ -40,7 +40,7 @@ struct Crumb {
     func toAnyObject() -> Any {
         return [
             "name": name,
-            "crumbKey": crumbKey
+            "crumbKey": crumbKey,
             "city": city
 //            "rating": rating!
         ]

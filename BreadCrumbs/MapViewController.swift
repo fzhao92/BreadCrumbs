@@ -19,7 +19,7 @@ class MapViewController: UIViewController {
     var placeInLineCounter = 1
     var locationList: [Location] = []
     var crumbKey: String = ""
-    let city = ""
+    var city = ""
     
     let locationsRef = FIRDatabase.database().reference(withPath: "locations")
     let crumbsRef = FIRDatabase.database().reference(withPath: "crumbs")
@@ -58,6 +58,9 @@ class MapViewController: UIViewController {
                     // not all places have thoroughfare & subThoroughfare so validate those values
                     annotation.title = pm.thoroughfare! + ", " + pm.subThoroughfare!
                     annotation.subtitle = pm.subLocality
+                    if let city = pm.locality {
+                        self.city = city
+                    }
                     self.mapView.addAnnotation(annotation)
                 }
                 else {
@@ -97,7 +100,7 @@ class MapViewController: UIViewController {
         let saveAction = UIAlertAction(title: "Save", style: .default) { _ in
             guard let textField = saveAlert.textFields?.first, let text = textField.text else { return }
             let crumbKey = self.genKey()
-            let crumb = Crumb(name: text, crumbKey: crumbKey)
+            let crumb = Crumb(name: text, crumbKey: crumbKey, city: self.city)
             let crumbsRef = self.crumbsRef.child(text.lowercased())
             crumbsRef.setValue(crumb.toAnyObject())
             
@@ -155,8 +158,6 @@ extension MapViewController: MKMapViewDelegate {
     }
     
 }
-
-
 
 extension MapViewController {
     
