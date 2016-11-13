@@ -18,7 +18,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     override init() {
         super.init()
         FIRApp.configure()
-        FIRDatabase.database().persistenceEnabled = true
+        FIRDatabase.database().persistenceEnabled = false
 
     }
 

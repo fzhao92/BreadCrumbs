@@ -7,38 +7,43 @@
 //
 
 import UIKit
+import FirebaseDatabase
 
 private let reuseIdentifier = "Cell"
 
 class CrumbsCollectionViewController: UICollectionViewController {
-
-    fileprivate let reuseIdentifier = "crumbCell"
-    fileprivate let sectionInsets = UIEdgeInsets(top: 50.0, left: 20.0, bottom: 50.0, right: 20.0)
-    
-    
-    //SEARCH
-    //fileprivate let crumb = Crumb()
-    fileprivate let itemsPerRow: CGFloat = 3
     
     struct FlickrSearchResults {
         let searchTerm: String
         let searchResults = [String]()
     }
+
+    fileprivate let reuseIdentifier = "crumbCell"
+    fileprivate let sectionInsets = UIEdgeInsets(top: 50.0, left: 20.0, bottom: 50.0, right: 20.0)
+    fileprivate let itemsPerRow: CGFloat = 2
+
     
+    let ref = FIRDatabase.database().reference(withPath: "crumbs")
+    var crumbs: [Crumb] = []
+
     
-    var crumbsArray: [String] = ["San Franscisco", "London", "Tokyo", "Brisbon", "Sweden", "New York"]
+    override func viewWillAppear(_ animated: Bool) {
+        ref.observe(.value, with: { snapshot in
+            var newCrumbs: [Crumb] = []
+            //print(snapshot.value)
+            for item in snapshot.children {
+                let crumb = Crumb(snapshot: item as! FIRDataSnapshot)
+                newCrumbs.append(crumb)
+            }
+            self.crumbs = newCrumbs
+            self.collectionView?.reloadData()
+        })
+    }
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-        
-        // Register cell classes
-        
-        //self.collectionView!.register(UICollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
-        
-        // Do any additional setup after loading the view.
     }
     
     override func didReceiveMemoryWarning() {
@@ -60,26 +65,29 @@ class CrumbsCollectionViewController: UICollectionViewController {
     
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-        return crumbsArray.count
+        return 1
     }
     
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of items
-        return self.crumbsArray.count
+        return self.crumbs.count
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = (collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath)) as! CrumbCell
         
         // Configure the cell
-        cell.myLabel.text = self.crumbsArray[indexPath.row]
+        cell.name.text = crumbs[indexPath.row].name
+        cell.cityLabel.text = crumbs[indexPath.row].city
         cell.backgroundColor = UIColor.cyan
+        print("size of list is \(crumbs.count)")
+        print("cellforItemAt executed")
         return cell
     }
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print("You selected cell #\(indexPath.row)!")
+        
     }
     // MARK: UICollectionViewDelegate
     
@@ -141,11 +149,3 @@ extension CrumbsCollectionViewController: UICollectionViewDelegateFlowLayout {
         return sectionInsets.left
     }
 }
-
-//private extension CrumbsCollectionViewController {
-//   func photoForIndexPath(indexPath: IndexPath) -> UIImage {
-//      return search[(indexPath as NSIndexPath).section].searchResults[(indexPath as NSIndexPath).row]
-//  }
-//}
-
-

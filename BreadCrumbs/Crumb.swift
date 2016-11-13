@@ -32,7 +32,12 @@ struct Crumb {
         let snapshotValue = snapshot.value as! [String: AnyObject]
         self.name = snapshotValue["name"] as! String
         self.crumbKey = snapshotValue["crumbKey"] as! String
-        self.city = snapshotValue["city"] as! String
+        if let unwrappedCityName = snapshotValue["city"] {
+            self.city =  unwrappedCityName as! String
+        }
+        else {
+            self.city = ""
+        }
 //        self.rating = snapshotValue["rating"] as? Int
         ref = snapshot.ref
     }

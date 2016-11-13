@@ -10,8 +10,9 @@ import UIKit
 
 class CrumbCell: UICollectionViewCell {
     
-    @IBOutlet weak var myLabel: UILabel!
+    @IBOutlet weak var name: UILabel!
     
+    @IBOutlet weak var cityLabel: UILabel!
     /*
      // MARK: - Navigation
      
