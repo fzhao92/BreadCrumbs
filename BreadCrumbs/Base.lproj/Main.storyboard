@@ -31,10 +31,10 @@
             </objects>
             <point key="canvasLocation" x="-55" y="124"/>
         </scene>
-        <!--View Controller-->
+        <!--Show Crumb View Controller-->
         <scene sceneID="Uw3-aZ-Jhi">
             <objects>
-                <viewController id="JrE-o1-n1m" sceneMemberID="viewController">
+                <viewController id="JrE-o1-n1m" customClass="ShowCrumbViewController" customModule="BreadCrumbs" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Ov2-mF-qqX"/>
                         <viewControllerLayoutGuide type="bottom" id="kz4-OW-vPW"/>

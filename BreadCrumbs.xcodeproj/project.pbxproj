@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		3F1C5A8F1DD8FBFE00FB476D /* CrumbCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F1C5A8E1DD8FBFE00FB476D /* CrumbCell.swift */; };
+		3F1C5A911DD91BB900FB476D /* ShowCrumbViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F1C5A901DD91BB900FB476D /* ShowCrumbViewController.swift */; };
 		3F8091DF1DD7985400546F6F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F8091DE1DD7985400546F6F /* AppDelegate.swift */; };
 		3F8091E11DD7985400546F6F /* CreateCrumbViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F8091E01DD7985400546F6F /* CreateCrumbViewController.swift */; };
 		3F8091E41DD7985400546F6F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3F8091E21DD7985400546F6F /* Main.storyboard */; };
@@ -23,6 +24,7 @@
 
 /* Begin PBXFileReference section */
 		3F1C5A8E1DD8FBFE00FB476D /* CrumbCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CrumbCell.swift; sourceTree = "<group>"; };
+		3F1C5A901DD91BB900FB476D /* ShowCrumbViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShowCrumbViewController.swift; sourceTree = "<group>"; };
 		3F8091DB1DD7985400546F6F /* BreadCrumbs.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BreadCrumbs.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3F8091DE1DD7985400546F6F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3F8091E01DD7985400546F6F /* CreateCrumbViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateCrumbViewController.swift; sourceTree = "<group>"; };
@@ -94,6 +96,7 @@
 			children = (
 				3F8091E01DD7985400546F6F /* CreateCrumbViewController.swift */,
 				3F8091F21DD79B9500546F6F /* CrumbsCollectionViewController.swift */,
+				3F1C5A901DD91BB900FB476D /* ShowCrumbViewController.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -263,6 +266,7 @@
 			files = (
 				3F8091E11DD7985400546F6F /* CreateCrumbViewController.swift in Sources */,
 				3F8091F31DD79B9500546F6F /* CrumbsCollectionViewController.swift in Sources */,
+				3F1C5A911DD91BB900FB476D /* ShowCrumbViewController.swift in Sources */,
 				3F8091F91DD79CAF00546F6F /* Enums.swift in Sources */,
 				3F8091DF1DD7985400546F6F /* AppDelegate.swift in Sources */,
 				3F8091F51DD79BA200546F6F /* Crumb.swift in Sources */,
