@@ -14,10 +14,13 @@ import FirebaseDatabase
 class MapViewController: UIViewController {
 
     @IBOutlet weak var mapView: MKMapView!
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+
     var places: [CLPlacemark] = []
     var locationManager: CLLocationManager!
     var placeInLineCounter = 1
     var locationList: [Location] = []
+    var mapItemList: [MKMapItem] = []
     var crumbKey: String = ""
     var city = ""
     
@@ -29,48 +32,32 @@ class MapViewController: UIViewController {
         placeInLineCounter = 1
         initGestures()
         setupLocationManager()
+        activityIndicator.isHidden = true
+        mapView.delegate = self
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
     
+    // MARK: - IBAction methods
+    
+    @IBAction func saveButtonTapped(_ sender: UIBarButtonItem) {
+        saveCrumb()
+    }
+    
+    @IBAction func clearPinButtonTapped(_ sender: UIBarButtonItem) {
+        clearPins()
+    }
+    
+    @IBAction func routeButtonTapped(_ sender: UIBarButtonItem) {
+        activityIndicator.startAnimating()
+        calculateSegmentDirections(index: 0, time: 0, routes: [])
+    }
+    
     func initGestures() {
         let longPressMapGesture = UILongPressGestureRecognizer(target: self, action: #selector(self.addAnnotation(_ :)) )
         mapView.addGestureRecognizer(longPressMapGesture)
-    }
-    
-    func addAnnotation(_ gestureRecognizer: UILongPressGestureRecognizer) {
-        if gestureRecognizer.state == UIGestureRecognizerState.began {
-            let touchPoint = gestureRecognizer.location(in: mapView)
-            let newCoordinates = mapView.convert(touchPoint, toCoordinateFrom: mapView)
-            let annotation = MKPointAnnotation()
-            annotation.coordinate = newCoordinates
-            
-            CLGeocoder().reverseGeocodeLocation(CLLocation(latitude: newCoordinates.latitude, longitude: newCoordinates.longitude), completionHandler: {(placemarks, error) -> Void in
-                if error != nil {
-                    print("Reverse geocoder failed with error" + (error?.localizedDescription)!)
-                    return
-                }
-                
-                if (placemarks?.count)! > 0 {
-                    let pm = (placemarks?[0])! 
-                    // not all places have thoroughfare & subThoroughfare so validate those values
-                    annotation.title = pm.thoroughfare! + ", " + pm.subThoroughfare!
-                    annotation.subtitle = pm.subLocality
-                    if let city = pm.locality {
-                        self.city = city
-                    }
-                    self.mapView.addAnnotation(annotation)
-                }
-                else {
-                    annotation.title = "Unknown Place"
-                    self.mapView.addAnnotation(annotation)
-                    print("Problem with the data received from geocoder")
-                }
-                self.saveLocationToList(annotation: annotation)
-            })
-        }
     }
     
     func saveLocationToList(annotation: MKAnnotation) {
@@ -83,14 +70,6 @@ class MapViewController: UIViewController {
         let location = Location(crumbKey: crumbKey, name: locationName, latitude: annotation.coordinate.latitude, longitude: annotation.coordinate.longitude, placeInLine: placeInLineCounter)
         placeInLineCounter += 1
         locationList.append(location)
-    }
-
-    @IBAction func saveButtonTapped(_ sender: UIBarButtonItem) {
-        saveCrumb()
-    }
-    
-    @IBAction func clearPinButtonTapped(_ sender: UIBarButtonItem) {
-        clearPins()
     }
     
     func saveCrumb() {
@@ -121,11 +100,9 @@ class MapViewController: UIViewController {
 
     }
     
-    func clearPins() {
-        mapView.removeAnnotations(mapView.annotations)
-        locationList.removeAll()
-    }
 }
+
+// MARK: -  Location methods and setup
 
 extension MapViewController: CLLocationManagerDelegate {
     
@@ -151,13 +128,150 @@ extension MapViewController: CLLocationManagerDelegate {
     
 }
 
+// MARK: - MapView methods
+
 extension MapViewController: MKMapViewDelegate {
+    
+    func addAnnotation(_ gestureRecognizer: UILongPressGestureRecognizer) {
+        if gestureRecognizer.state == UIGestureRecognizerState.began {
+            let touchPoint = gestureRecognizer.location(in: mapView)
+            let newCoordinates = mapView.convert(touchPoint, toCoordinateFrom: mapView)
+            let annotation = MKPointAnnotation()
+            annotation.coordinate = newCoordinates
+            
+            CLGeocoder().reverseGeocodeLocation(CLLocation(latitude: newCoordinates.latitude, longitude: newCoordinates.longitude), completionHandler: {(placemarks, error) -> Void in
+                if error != nil {
+                    print("Reverse geocoder failed with error" + (error?.localizedDescription)!)
+                    return
+                }
+                
+                if (placemarks?.count)! > 0 {
+                    let pm = (placemarks?[0])!
+                    // not all places have thoroughfare & subThoroughfare so validate those values
+                    annotation.title = pm.thoroughfare! + ", " + pm.subThoroughfare!
+                    annotation.subtitle = pm.subLocality
+                    if let city = pm.locality {
+                        self.city = city
+                    }
+                    self.mapView.addAnnotation(annotation)
+                }
+                else {
+                    annotation.title = "Unknown Place"
+                    self.mapView.addAnnotation(annotation)
+                    print("Problem with the data received from geocoder")
+                }
+                let placemark = MKPlacemark(coordinate: annotation.coordinate)
+                self.mapItemList.append(MKMapItem(placemark: placemark))
+                self.saveLocationToList(annotation: annotation)
+            })
+        }
+    }
+    
+    func clearPins() {
+        mapView.removeAnnotations(mapView.annotations)
+        locationList.removeAll()
+        mapItemList.removeAll()
+    }
+    
+    func calculateSegmentDirections(index: Int, time: TimeInterval, routes: [MKRoute]) {
+        // 1
+        let request: MKDirectionsRequest = MKDirectionsRequest()
+        request.source = mapItemList[index]
+        request.destination = mapItemList[index+1]
+        // 2
+        request.requestsAlternateRoutes = true
+        // 33
+        request.transportType = .walking
+        // 4
+        let directions = MKDirections(request: request)
+        
+        //get array of mkroutes
+        
+        directions.calculate { (response, error) in
+            if let routeResponse = response?.routes {
+                let quickestRouteForSegment: MKRoute = routeResponse.sorted(by: {$0.expectedTravelTime < $1.expectedTravelTime})[0]
+                
+                var timeVar = time
+                var routesVar = routes
+                
+                routesVar.append(quickestRouteForSegment)
+                timeVar += quickestRouteForSegment.expectedTravelTime
+                
+                if index+2 < self.mapItemList.count {
+                    //print("size of map list is \(self.mapItemList.count)")
+                    //print("Current map list index = \(index)")
+                    self.calculateSegmentDirections(index: index+1, time: timeVar, routes: routesVar)
+                }
+                else {
+                    self.activityIndicator.stopAnimating()
+                    //plot route on map
+                    print("Attempting to plot route var")
+                    self.showRoute(routes: routesVar)
+                }
+            }
+            else if let _ = error{
+                let alert = UIAlertController(title: nil,
+                                              message: "Directions not available.", preferredStyle: .alert)
+                let okButton = UIAlertAction(title: "OK", style: .cancel)
+                alert.addAction(okButton)
+                self.present(alert, animated: true,
+                                           completion: nil)
+            }
+        }
+    
+    }
+    
+    func showRoute(routes: [MKRoute]) {
+        for i in 0..<routes.count {
+            print("plotting route # \(i)")
+            plotPolyline(route: routes[i])
+        }
+    }
+    
+    func plotPolyline(route: MKRoute) {
+        // 1
+        mapView.add(route.polyline)
+        // 2
+        if mapView.overlays.count == 1 {
+            mapView.setVisibleMapRect(route.polyline.boundingMapRect,
+                                      edgePadding: UIEdgeInsetsMake(10.0, 10.0, 10.0, 10.0),
+                                      animated: false)
+        }
+            // 3
+        else {
+            let polylineBoundingRect =  MKMapRectUnion(mapView.visibleMapRect,
+                                                       route.polyline.boundingMapRect)
+            mapView.setVisibleMapRect(polylineBoundingRect,
+                                      edgePadding: UIEdgeInsetsMake(10.0, 10.0, 10.0, 10.0),
+                                      animated: false)
+        }
+    }
+    
+    func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
+        let polylineRenderer = MKPolylineRenderer(overlay: overlay)
+        if (overlay is MKPolyline) {
+            if mapView.overlays.count == 1 {
+                polylineRenderer.strokeColor =
+                    UIColor.blue.withAlphaComponent(0.75)
+            } else if mapView.overlays.count == 2 {
+                polylineRenderer.strokeColor =
+                    UIColor.green.withAlphaComponent(0.75)
+            } else if mapView.overlays.count == 3 {
+                polylineRenderer.strokeColor =
+                    UIColor.red.withAlphaComponent(0.75)
+            }
+            polylineRenderer.lineWidth = 5
+        }
+        return polylineRenderer
+    }
     
     func mapView(_ mapView: MKMapView, didDeselect view: MKAnnotationView) {
         
     }
     
 }
+
+// MARK: - Helper Methods
 
 extension MapViewController {
     

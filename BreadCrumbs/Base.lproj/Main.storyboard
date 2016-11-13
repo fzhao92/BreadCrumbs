@@ -91,6 +91,11 @@
                                                     <action selector="saveButtonTapped:" destination="wXu-EL-JH5" id="iwk-9f-5QP"/>
                                                 </connections>
                                             </barButtonItem>
+                                            <barButtonItem title="ROUTE" id="Yxo-b1-ynE">
+                                                <connections>
+                                                    <action selector="routeButtonTapped:" destination="wXu-EL-JH5" id="guR-pt-hSH"/>
+                                                </connections>
+                                            </barButtonItem>
                                             <barButtonItem systemItem="trash" id="Pal-q9-qwh">
                                                 <connections>
                                                     <action selector="clearPinButtonTapped:" destination="wXu-EL-JH5" id="ZXl-Ad-hW5"/>
@@ -100,17 +105,23 @@
                                     </navigationItem>
                                 </items>
                             </navigationBar>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="x5S-Hl-BLd">
+                                <rect key="frame" x="177" y="323" width="20" height="20"/>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="u0x-Uy-RLj" firstAttribute="leading" secondItem="Kt2-Jn-I2Z" secondAttribute="leadingMargin" id="1Ae-CZ-et6"/>
                             <constraint firstItem="u0x-Uy-RLj" firstAttribute="top" secondItem="OW6-b9-70g" secondAttribute="bottom" id="6pN-hw-hh4"/>
                             <constraint firstItem="y4H-Up-5YL" firstAttribute="top" secondItem="u0x-Uy-RLj" secondAttribute="bottom" id="JgU-Kl-ZiZ"/>
+                            <constraint firstItem="x5S-Hl-BLd" firstAttribute="centerX" secondItem="Kt2-Jn-I2Z" secondAttribute="centerX" id="aTZ-YL-DEf"/>
+                            <constraint firstItem="x5S-Hl-BLd" firstAttribute="centerY" secondItem="Kt2-Jn-I2Z" secondAttribute="centerY" id="zXE-UO-KGH"/>
                             <constraint firstAttribute="trailingMargin" secondItem="u0x-Uy-RLj" secondAttribute="trailing" id="zl3-Cx-Yzp"/>
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Item" id="oH0-0p-fhl"/>
                     <connections>
+                        <outlet property="activityIndicator" destination="x5S-Hl-BLd" id="rlI-0S-r0r"/>
                         <outlet property="mapView" destination="u0x-Uy-RLj" id="tdE-Uv-DkS"/>
                     </connections>
                 </viewController>
