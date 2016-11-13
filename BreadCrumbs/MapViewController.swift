@@ -101,8 +101,9 @@ class MapViewController: UIViewController {
             crumbsRef.setValue(crumb.toAnyObject())
             
             for (index, _) in self.locationList.enumerated() {
+                print("index is \(index)")
                 self.locationList[index].crumbKey = crumbKey
-                let locationsRef = self.locationsRef.child(self.locationList[index].crumbKey)
+                let locationsRef = self.locationsRef.child(self.genKey())
                 locationsRef.setValue(self.locationList[index].toAnyObject())
             }
             
