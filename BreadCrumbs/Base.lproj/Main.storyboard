@@ -23,7 +23,7 @@
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     </tabBar>
                     <connections>
-                        <segue destination="GKt-0x-FPa" kind="relationship" relationship="viewControllers" id="1Yh-i6-Fkk"/>
+                        <segue destination="9id-wa-EZQ" kind="relationship" relationship="viewControllers" id="1Yh-i6-Fkk"/>
                         <segue destination="wXu-EL-JH5" kind="relationship" relationship="viewControllers" id="Y3X-HG-mNA"/>
                     </connections>
                 </tabBarController>
@@ -31,7 +31,36 @@
             </objects>
             <point key="canvasLocation" x="-55" y="124"/>
         </scene>
-        <!--Item-->
+        <!--View Controller-->
+        <scene sceneID="Uw3-aZ-Jhi">
+            <objects>
+                <viewController id="JrE-o1-n1m" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Ov2-mF-qqX"/>
+                        <viewControllerLayoutGuide type="bottom" id="kz4-OW-vPW"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="hGM-Zc-MoG">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="ptG-4n-vdf">
+                                <rect key="frame" x="16" y="64" width="343" height="554"/>
+                            </mapView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="ptG-4n-vdf" firstAttribute="top" secondItem="Ov2-mF-qqX" secondAttribute="bottom" id="4Wj-Vd-3w5"/>
+                            <constraint firstItem="kz4-OW-vPW" firstAttribute="top" secondItem="ptG-4n-vdf" secondAttribute="bottom" id="SCh-aM-a4k"/>
+                            <constraint firstItem="ptG-4n-vdf" firstAttribute="leading" secondItem="hGM-Zc-MoG" secondAttribute="leadingMargin" id="sG3-BH-LjZ"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="ptG-4n-vdf" secondAttribute="trailing" id="tyf-tB-aQH"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Qat-fn-2cN" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1740" y="-716"/>
+        </scene>
+        <!--Crumbs Collection View Controller-->
         <scene sceneID="ayP-Ao-PNf">
             <objects>
                 <collectionViewController id="GKt-0x-FPa" customClass="CrumbsCollectionViewController" customModule="BreadCrumbs" customModuleProvider="target" sceneMemberID="viewController">
@@ -80,6 +109,7 @@
                                 <connections>
                                     <outlet property="cityLabel" destination="O7S-AU-WdR" id="YBR-wh-gdX"/>
                                     <outlet property="name" destination="t4t-SY-cjz" id="SOl-f8-UTs"/>
+                                    <segue destination="JrE-o1-n1m" kind="show" identifier="showCrumbDetail" id="wUI-J9-pky"/>
                                 </connections>
                             </collectionViewCell>
                         </cells>
@@ -88,16 +118,16 @@
                             <outlet property="delegate" destination="GKt-0x-FPa" id="zE8-Xi-jXf"/>
                         </connections>
                     </collectionView>
-                    <tabBarItem key="tabBarItem" title="Item" id="soH-Wq-7L9"/>
+                    <navigationItem key="navigationItem" id="zJD-CR-tY3"/>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="QR6-CK-aiG" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="773.60000000000002" y="123.68815592203899"/>
+            <point key="canvasLocation" x="1712.8" y="123.68815592203899"/>
         </scene>
         <!--Item-->
         <scene sceneID="cQ1-CG-mHk">
             <objects>
-                <viewController id="wXu-EL-JH5" customClass="MapViewController" customModule="BreadCrumbs" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="wXu-EL-JH5" customClass="CreateCrumbController" customModule="BreadCrumbs" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="OW6-b9-70g"/>
                         <viewControllerLayoutGuide type="bottom" id="y4H-Up-5YL"/>
@@ -156,7 +186,26 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="MAX-hc-0J7" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1601" y="124"/>
+            <point key="canvasLocation" x="2540" y="123.68815592203899"/>
+        </scene>
+        <!--Item-->
+        <scene sceneID="aOe-fS-FHo">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="9id-wa-EZQ" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Item" id="soH-Wq-7L9"/>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="cnS-Kw-9qS">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="GKt-0x-FPa" kind="relationship" relationship="rootViewController" id="mTC-gR-wIf"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="RbN-WT-iJf" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="773.60000000000002" y="123.68815592203899"/>
         </scene>
     </scenes>
 </document>

@@ -11,7 +11,7 @@ import MapKit
 import CoreLocation
 import FirebaseDatabase
 
-class MapViewController: UIViewController {
+class CreateCrumbController: UIViewController {
 
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
@@ -101,7 +101,7 @@ class MapViewController: UIViewController {
 
 // MARK: -  Location methods and setup
 
-extension MapViewController: CLLocationManagerDelegate {
+extension CreateCrumbController: CLLocationManagerDelegate {
     
     func setupLocationManager(){
         locationManager = CLLocationManager()
@@ -127,7 +127,7 @@ extension MapViewController: CLLocationManagerDelegate {
 
 // MARK: - MapView methods
 
-extension MapViewController: MKMapViewDelegate {
+extension CreateCrumbController: MKMapViewDelegate {
     
     func addAnnotation(_ gestureRecognizer: UILongPressGestureRecognizer) {
         if gestureRecognizer.state == UIGestureRecognizerState.began {
@@ -258,7 +258,7 @@ extension MapViewController: MKMapViewDelegate {
 
 // MARK: - Helper Methods
 
-extension MapViewController {
+extension CreateCrumbController {
     
     func initGestures() {
         let longPressMapGesture = UILongPressGestureRecognizer(target: self, action: #selector(self.addAnnotation(_ :)) )
