@@ -7,4 +7,6 @@ target 'BreadCrumbs' do
 
   # Pods for BreadCrumbs
   pod 'Firebase/Core'
+  pod 'Firebase/Database'
+  pod 'Firebase/Auth'
 end

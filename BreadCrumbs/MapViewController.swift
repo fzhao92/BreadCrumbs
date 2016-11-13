@@ -9,6 +9,7 @@
 import UIKit
 import MapKit
 import CoreLocation
+import FirebaseDatabase
 
 class MapViewController: UIViewController {
 
@@ -18,13 +19,17 @@ class MapViewController: UIViewController {
     var placeInLineCounter = 1
     //var breadCrumb: Crumb = Crumb()
     var locationList: [Location] = []
+    var crumbKey: String = ""
+    
+    let locationsRef = FIRDatabase.database().reference(withPath: "locations")
+    let crumbsRef = FIRDatabase.database().reference(withPath: "crumbs")
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        placeInLineCounter = 1
         initGestures()
         setupLocationManager()
-        
     }
 
     override func didReceiveMemoryWarning() {
@@ -76,7 +81,7 @@ class MapViewController: UIViewController {
                 locationName = unwrappedName
             }
         }
-        let location = Location(name: locationName, latitude: annotation.coordinate.latitude, longitude: annotation.coordinate.longitude, placeInLine: placeInLineCounter)
+        let location = Location(crumbKey: crumbKey, name: locationName, latitude: annotation.coordinate.latitude, longitude: annotation.coordinate.longitude, placeInLine: placeInLineCounter)
         placeInLineCounter += 1
         locationList.append(location)
     }
@@ -86,12 +91,22 @@ class MapViewController: UIViewController {
     }
     
     func saveCrumb() {
-        var crumb: Crumb = Crumb(name: "default")
+        
         let saveAlert = UIAlertController(title: "New Bread Crumb", message: "Save your trail!", preferredStyle: .alert)
         let saveAction = UIAlertAction(title: "Save", style: .default) { _ in
             guard let textField = saveAlert.textFields?.first, let text = textField.text else { return }
-            crumb.name = text
-            crumb.locations = self.locationList
+            let crumbKey = self.genKey()
+            let crumb = Crumb(name: text, crumbKey: crumbKey)
+            let crumbsRef = self.crumbsRef.child(text.lowercased())
+            crumbsRef.setValue(crumb.toAnyObject())
+            
+            for (index, _) in self.locationList.enumerated() {
+                self.locationList[index].crumbKey = crumbKey
+                let locationsRef = self.locationsRef.child(self.locationList[index].crumbKey)
+                locationsRef.setValue(self.locationList[index].toAnyObject())
+            }
+            
+            //crumb.locations = self.locationList
         }
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
         
@@ -130,8 +145,26 @@ extension MapViewController: CLLocationManagerDelegate {
 extension MapViewController: MKMapViewDelegate {
     
     func mapView(_ mapView: MKMapView, didDeselect view: MKAnnotationView) {
-        mapView
     }
     
+}
+
+extension MapViewController {
+    
+    func genKey() -> String {
+        let length = 12
+        let letters : NSString = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+        let len = UInt32(letters.length)
+        
+        var randomString = ""
+        
+        for _ in 0 ..< length {
+            let rand = arc4random_uniform(len)
+            var nextChar = letters.character(at: Int(rand))
+            randomString += NSString(characters: &nextChar, length: 1) as String
+        }
+        
+        return randomString
+    }
 }
 

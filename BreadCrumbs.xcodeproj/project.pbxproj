@@ -69,6 +69,32 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		3F205CC91DD7C9B0002B031A /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				3F8091F41DD79BA200546F6F /* Crumb.swift */,
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
+		3F205CCA1DD7C9C9002B031A /* Layouts */ = {
+			isa = PBXGroup;
+			children = (
+				3F8091E21DD7985400546F6F /* Main.storyboard */,
+				3F8091E71DD7985400546F6F /* LaunchScreen.storyboard */,
+			);
+			name = Layouts;
+			sourceTree = "<group>";
+		};
+		3F205CCB1DD7C9D7002B031A /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				3F8091E01DD7985400546F6F /* MapViewController.swift */,
+				3F8091F21DD79B9500546F6F /* CrumbsCollectionViewController.swift */,
+			);
+			name = Controllers;
+			sourceTree = "<group>";
+		};
 		3F8091D21DD7985400546F6F = {
 			isa = PBXGroup;
 			children = (
@@ -91,12 +117,10 @@
 			isa = PBXGroup;
 			children = (
 				3F8091DE1DD7985400546F6F /* AppDelegate.swift */,
-				3F8091E01DD7985400546F6F /* MapViewController.swift */,
-				3F8091F21DD79B9500546F6F /* CrumbsCollectionViewController.swift */,
-				3F8091F41DD79BA200546F6F /* Crumb.swift */,
-				3F8091E21DD7985400546F6F /* Main.storyboard */,
+				3F205CCB1DD7C9D7002B031A /* Controllers */,
+				3F205CC91DD7C9B0002B031A /* Models */,
+				3F205CCA1DD7C9C9002B031A /* Layouts */,
 				3F8091E51DD7985400546F6F /* Assets.xcassets */,
-				3F8091E71DD7985400546F6F /* LaunchScreen.storyboard */,
 				3F8091F01DD798D400546F6F /* GoogleService-Info.plist */,
 				3F8091EA1DD7985400546F6F /* Info.plist */,
 				3F8091F81DD79CAF00546F6F /* Enums.swift */,
