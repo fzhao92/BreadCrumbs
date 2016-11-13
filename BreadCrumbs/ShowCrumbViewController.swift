@@ -7,31 +7,28 @@
 //
 
 import UIKit
+import FirebaseDatabase
 
 class ShowCrumbViewController: UIViewController {
 
+    let ref = FIRDatabase.database().reference(withPath: "locations")
     var crumbKey: String = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        print("Crumb key is \(crumbKey)")
-        // Do any additional setup after loading the view.
+        queryForLocations()
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    func queryForLocations() {
+        let query = ref.queryOrdered(byChild: "crumbKey").queryEqual(toValue: crumbKey)
+        query.observe(.value, with: { snapshot in
+            print("Ateempt to query firebase")
+            print(snapshot.value)
+        })
     }
-    */
 
 }
