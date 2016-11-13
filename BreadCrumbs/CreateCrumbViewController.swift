@@ -51,8 +51,10 @@ class CreateCrumbController: UIViewController {
     }
     
     @IBAction func routeButtonTapped(_ sender: UIBarButtonItem) {
-        activityIndicator.startAnimating()
-        calculateSegmentDirections(index: 0, time: 0, routes: [])
+        if mapItemList.count > 1 {
+            activityIndicator.startAnimating()
+            calculateSegmentDirections(index: 0, time: 0, routes: [])
+        }
     }
     
     // MARK: - Firebase related methods
