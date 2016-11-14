@@ -55,6 +55,9 @@
                             <constraint firstAttribute="trailingMargin" secondItem="ptG-4n-vdf" secondAttribute="trailing" id="tyf-tB-aQH"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="mapView" destination="ptG-4n-vdf" id="mDa-Tm-ZUt"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Qat-fn-2cN" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

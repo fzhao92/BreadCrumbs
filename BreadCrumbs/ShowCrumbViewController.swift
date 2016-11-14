@@ -7,28 +7,61 @@
 //
 
 import UIKit
+import MapKit
 import FirebaseDatabase
 
-class ShowCrumbViewController: UIViewController {
+class ShowCrumbViewController: UIViewController, MKMapViewDelegate {
 
+    @IBOutlet weak var mapView: MKMapView!
+    
     let ref = FIRDatabase.database().reference(withPath: "locations")
     var crumbKey: String = ""
+    var locations: [Location] = []
+    var mapItemList: [MKMapItem] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        queryForLocations()
+        mapView.delegate = self
+        queryForLocations {
+            self.convertLocationsToMapItem()
+            self.addAnnotationsToMap()
+        }
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
     
-    func queryForLocations() {
+    func queryForLocations(completion: @escaping () -> Void) {
         let query = ref.queryOrdered(byChild: "crumbKey").queryEqual(toValue: crumbKey)
         query.observe(.value, with: { snapshot in
-            print("Ateempt to query firebase")
-            print(snapshot.value)
+            var newLocations: [Location] = []
+            for item in snapshot.children {
+                let location = Location(snapshot: item as! FIRDataSnapshot)
+                newLocations.append(location)
+            }
+            self.locations = newLocations
+            completion()
         })
+    }
+    
+    func convertLocationsToMapItem() {
+        for location in locations {
+            let placemark = MKPlacemark(coordinate: CLLocationCoordinate2DMake(location.latitude, location.longitude))
+            mapItemList.append(MKMapItem(placemark: placemark))
+        }
+    }
+    
+    func addAnnotationsToMap() {
+        var annotations: [MKAnnotation] = []
+        for item in mapItemList {
+            let annotation = MKPointAnnotation()
+            annotation.coordinate = item.placemark.coordinate
+            annotations.append(annotation)
+        }
+        let region = MKCoordinateRegion(center: annotations[0].coordinate, span: MKCoordinateSpan(latitudeDelta: 0.04, longitudeDelta: 0.04))
+        mapView.setRegion(region, animated: true)
+        mapView.addAnnotations(annotations)
     }
 
 }

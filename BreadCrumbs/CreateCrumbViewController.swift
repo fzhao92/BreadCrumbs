@@ -16,7 +16,6 @@ class CreateCrumbController: UIViewController {
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
 
-    var places: [CLPlacemark] = []
     var locationManager: CLLocationManager!
     var placeInLineCounter = 1
     var locationList: [Location] = []
@@ -147,6 +146,12 @@ extension CreateCrumbController: MKMapViewDelegate {
                 if (placemarks?.count)! > 0 {
                     let pm = (placemarks?[0])!
                     // not all places have thoroughfare & subThoroughfare so validate those values
+                    if let thoroughfare = pm.thoroughfare, let subThoroughfare = pm.subThoroughfare {
+                        annotation.title = thoroughfare + ", " + subThoroughfare
+                    }
+                    else {
+                        annotation.title = "Info not available"
+                    }
                     annotation.title = pm.thoroughfare! + ", " + pm.subThoroughfare!
                     annotation.subtitle = pm.subLocality
                     if let city = pm.locality {

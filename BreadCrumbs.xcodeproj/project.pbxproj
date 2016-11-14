@@ -77,7 +77,6 @@
 			isa = PBXGroup;
 			children = (
 				3F8091F41DD79BA200546F6F /* Crumb.swift */,
-				3F1C5A8E1DD8FBFE00FB476D /* CrumbCell.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -101,6 +100,14 @@
 			name = Controllers;
 			sourceTree = "<group>";
 		};
+		3F3366241DDA0C31007D8D09 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				3F1C5A8E1DD8FBFE00FB476D /* CrumbCell.swift */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
 		3F8091D21DD7985400546F6F = {
 			isa = PBXGroup;
 			children = (
@@ -122,6 +129,7 @@
 		3F8091DD1DD7985400546F6F /* BreadCrumbs */ = {
 			isa = PBXGroup;
 			children = (
+				3F3366241DDA0C31007D8D09 /* Views */,
 				3F8091DE1DD7985400546F6F /* AppDelegate.swift */,
 				3F205CCB1DD7C9D7002B031A /* Controllers */,
 				3F205CC91DD7C9B0002B031A /* Models */,
