@@ -14,11 +14,12 @@
 		3F8091E41DD7985400546F6F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3F8091E21DD7985400546F6F /* Main.storyboard */; };
 		3F8091E61DD7985400546F6F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3F8091E51DD7985400546F6F /* Assets.xcassets */; };
 		3F8091E91DD7985400546F6F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3F8091E71DD7985400546F6F /* LaunchScreen.storyboard */; };
-		3F8091F11DD798D400546F6F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3F8091F01DD798D400546F6F /* GoogleService-Info.plist */; };
 		3F8091F31DD79B9500546F6F /* CrumbsCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F8091F21DD79B9500546F6F /* CrumbsCollectionViewController.swift */; };
 		3F8091F51DD79BA200546F6F /* Crumb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F8091F41DD79BA200546F6F /* Crumb.swift */; };
 		3F8091F71DD79C1000546F6F /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3F8091F61DD79C1000546F6F /* MapKit.framework */; };
 		3F8091F91DD79CAF00546F6F /* Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F8091F81DD79CAF00546F6F /* Enums.swift */; };
+		C3C6594B1DDBDCE200C7B533 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C3C6594A1DDBDCE200C7B533 /* GoogleService-Info.plist */; };
+		C3C6594F1DDBDF8400C7B533 /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3C6594E1DDBDF8400C7B533 /* RegisterViewController.swift */; };
 		E960B08FADFB537E62B71DFC /* Pods_BreadCrumbs.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BADE46BD82E2763963BD8EAE /* Pods_BreadCrumbs.framework */; };
 /* End PBXBuildFile section */
 
@@ -32,13 +33,15 @@
 		3F8091E51DD7985400546F6F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3F8091E81DD7985400546F6F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		3F8091EA1DD7985400546F6F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		3F8091F01DD798D400546F6F /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		3F8091F21DD79B9500546F6F /* CrumbsCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CrumbsCollectionViewController.swift; sourceTree = "<group>"; };
 		3F8091F41DD79BA200546F6F /* Crumb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Crumb.swift; sourceTree = "<group>"; };
 		3F8091F61DD79C1000546F6F /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		3F8091F81DD79CAF00546F6F /* Enums.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Enums.swift; sourceTree = "<group>"; };
 		4C81C195CB0853A54A7850A6 /* Pods-BreadCrumbs.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BreadCrumbs.release.xcconfig"; path = "Pods/Target Support Files/Pods-BreadCrumbs/Pods-BreadCrumbs.release.xcconfig"; sourceTree = "<group>"; };
 		BADE46BD82E2763963BD8EAE /* Pods_BreadCrumbs.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BreadCrumbs.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C3C6594A1DDBDCE200C7B533 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		C3C6594E1DDBDF8400C7B533 /* RegisterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
+		C3C659501DDCA45800C7B533 /* BreadCrumbs.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = BreadCrumbs.entitlements; sourceTree = "<group>"; };
 		D138DE2905CB9D131F653C28 /* Pods-BreadCrumbs.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BreadCrumbs.debug.xcconfig"; path = "Pods/Target Support Files/Pods-BreadCrumbs/Pods-BreadCrumbs.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -96,6 +99,7 @@
 				3F8091E01DD7985400546F6F /* CreateCrumbViewController.swift */,
 				3F8091F21DD79B9500546F6F /* CrumbsCollectionViewController.swift */,
 				3F1C5A901DD91BB900FB476D /* ShowCrumbViewController.swift */,
+				C3C6594E1DDBDF8400C7B533 /* RegisterViewController.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -129,14 +133,15 @@
 		3F8091DD1DD7985400546F6F /* BreadCrumbs */ = {
 			isa = PBXGroup;
 			children = (
+				C3C659501DDCA45800C7B533 /* BreadCrumbs.entitlements */,
 				3F3366241DDA0C31007D8D09 /* Views */,
 				3F8091DE1DD7985400546F6F /* AppDelegate.swift */,
 				3F205CCB1DD7C9D7002B031A /* Controllers */,
 				3F205CC91DD7C9B0002B031A /* Models */,
 				3F205CCA1DD7C9C9002B031A /* Layouts */,
 				3F8091E51DD7985400546F6F /* Assets.xcassets */,
-				3F8091F01DD798D400546F6F /* GoogleService-Info.plist */,
 				3F8091EA1DD7985400546F6F /* Info.plist */,
+				C3C6594A1DDBDCE200C7B533 /* GoogleService-Info.plist */,
 				3F8091F81DD79CAF00546F6F /* Enums.swift */,
 			);
 			path = BreadCrumbs;
@@ -177,9 +182,12 @@
 				TargetAttributes = {
 					3F8091DA1DD7985400546F6F = {
 						CreatedOnToolsVersion = 8.1;
-						DevelopmentTeam = H2562XJSGY;
+						DevelopmentTeam = 79TR88QV2P;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
+							com.apple.Keychain = {
+								enabled = 1;
+							};
 							com.apple.Maps.iOS = {
 								enabled = 1;
 							};
@@ -210,8 +218,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3F8091F11DD798D400546F6F /* GoogleService-Info.plist in Resources */,
 				3F8091E91DD7985400546F6F /* LaunchScreen.storyboard in Resources */,
+				C3C6594B1DDBDCE200C7B533 /* GoogleService-Info.plist in Resources */,
 				3F8091E61DD7985400546F6F /* Assets.xcassets in Resources */,
 				3F8091E41DD7985400546F6F /* Main.storyboard in Resources */,
 			);
@@ -275,6 +283,7 @@
 				3F8091E11DD7985400546F6F /* CreateCrumbViewController.swift in Sources */,
 				3F8091F31DD79B9500546F6F /* CrumbsCollectionViewController.swift in Sources */,
 				3F1C5A911DD91BB900FB476D /* ShowCrumbViewController.swift in Sources */,
+				C3C6594F1DDBDF8400C7B533 /* RegisterViewController.swift in Sources */,
 				3F8091F91DD79CAF00546F6F /* Enums.swift in Sources */,
 				3F8091DF1DD7985400546F6F /* AppDelegate.swift in Sources */,
 				3F8091F51DD79BA200546F6F /* Crumb.swift in Sources */,
@@ -400,10 +409,11 @@
 			baseConfigurationReference = D138DE2905CB9D131F653C28 /* Pods-BreadCrumbs.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = H2562XJSGY;
+				CODE_SIGN_ENTITLEMENTS = BreadCrumbs/BreadCrumbs.entitlements;
+				DEVELOPMENT_TEAM = 79TR88QV2P;
 				INFOPLIST_FILE = BreadCrumbs/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.ForrestApps.BreadCrumbs;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ForrestApps.BreadCrumb;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 			};
@@ -414,10 +424,11 @@
 			baseConfigurationReference = 4C81C195CB0853A54A7850A6 /* Pods-BreadCrumbs.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = H2562XJSGY;
+				CODE_SIGN_ENTITLEMENTS = BreadCrumbs/BreadCrumbs.entitlements;
+				DEVELOPMENT_TEAM = 79TR88QV2P;
 				INFOPLIST_FILE = BreadCrumbs/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.ForrestApps.BreadCrumbs;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ForrestApps.BreadCrumb;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 			};
