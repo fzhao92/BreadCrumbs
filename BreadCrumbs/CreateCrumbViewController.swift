@@ -23,6 +23,7 @@ class CreateCrumbController: UIViewController {
     var crumbKey: String = ""
     var city = ""
     
+    let rootRef = FIRDatabase.database().reference()
     let locationsRef = FIRDatabase.database().reference(withPath: "locations")
     let crumbsRef = FIRDatabase.database().reference(withPath: "crumbs")
     
@@ -78,7 +79,9 @@ class CreateCrumbController: UIViewController {
             guard let textField = saveAlert.textFields?.first, let text = textField.text else { return }
             let crumbKey = self.genKey()
             let crumb = Crumb(name: text, crumbKey: crumbKey, city: self.city)
+            print(text)
             let crumbsRef = self.crumbsRef.child(text.lowercased())
+            //self.rootRef.setValue(crumb.toAnyObject())
             crumbsRef.setValue(crumb.toAnyObject())
             
             for (index, _) in self.locationList.enumerated() {

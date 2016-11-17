@@ -50,6 +50,7 @@ class RegisterViewController: UIViewController {
             let ref = FIRDatabase.database().reference(withPath: "user")
             let user = ref.child(uid)
             let values = ["name": name, "email": email]
+            print("registering-----------------")
             user.updateChildValues(values, withCompletionBlock: { (error, ref) in
                 if error != nil {
                     print("error updating child values \(error)")
